@@ -1,0 +1,157 @@
+import { StyleSheet } from "react-native";
+import { colors, radius } from "@/constants/theme";
+
+export const homeStyles = StyleSheet.create({
+    list: {
+        padding: 16,
+        paddingBottom: 34,
+    },
+    header: {
+        gap: 18,
+        marginBottom: 8,
+    },
+    introCard: {
+        backgroundColor: colors.surface,
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.lg,
+        padding: 16,
+        flexDirection: "row",
+        gap: 14,
+        alignItems: "flex-start",
+    },
+    introIcon: {
+        width: 52,
+        height: 52,
+        borderRadius: 18,
+        backgroundColor: colors.surfaceAlt,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    kicker: {
+        color: colors.primary,
+        fontWeight: "900",
+        marginBottom: 2,
+    },
+    title: {
+        color: colors.text,
+        fontSize: 27,
+        fontWeight: "900",
+        letterSpacing: -0.5,
+    },
+    subtitle: {
+        color: colors.muted,
+        lineHeight: 21,
+        fontWeight: "600",
+        marginTop: 4,
+    },
+    locationBox: {
+        backgroundColor: colors.surface,
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.lg,
+        padding: 14,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 12,
+    },
+    locationIcon: {
+        width: 42,
+        height: 42,
+        borderRadius: 15,
+        backgroundColor: "#E3EFE8",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    locationTitle: {
+        color: colors.text,
+        fontWeight: "900",
+    },
+    locationText: {
+        color: colors.muted,
+        marginTop: 4,
+        fontWeight: "600",
+    },
+    locationButton: {
+        minHeight: 42,
+        minWidth: 86,
+    },
+    suggestionCard: {
+        backgroundColor: "#FFF7F0",
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.lg,
+        padding: 14,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 12,
+    },
+    suggestionIcon: {
+        width: 42,
+        height: 42,
+        borderRadius: 15,
+        backgroundColor: "#F4E5DB",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    suggestionTitle: {
+        color: colors.text,
+        fontWeight: "900",
+    },
+    suggestionText: {
+        color: colors.muted,
+        fontWeight: "600",
+        lineHeight: 19,
+        marginTop: 3,
+    },
+    suggestionButton: {
+        backgroundColor: colors.primary,
+        borderRadius: 999,
+        paddingHorizontal: 12,
+        paddingVertical: 9,
+    },
+    suggestionButtonText: {
+        color: "#FFFFFF",
+        fontWeight: "900",
+        fontSize: 12,
+    },
+    sectionTitle: {
+        color: colors.text,
+        fontSize: 18,
+        fontWeight: "900",
+        marginTop: 2,
+    },
+    filters: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: 10,
+    },
+    filter: {
+        backgroundColor: colors.surface,
+        borderColor: colors.border,
+        borderWidth: 1,
+        borderRadius: 999,
+        paddingHorizontal: 13,
+        paddingVertical: 9,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 7,
+    },
+    activeFilter: {
+        backgroundColor: colors.primary,
+        borderColor: colors.primary,
+    },
+    filterText: {
+        color: colors.text,
+        fontWeight: "800",
+    },
+    activeFilterText: {
+        color: "#FFFFFF",
+    },
+    resultsTitle: {
+        color: colors.text,
+        fontSize: 22,
+        fontWeight: "900",
+        marginTop: 2,
+    },
+});

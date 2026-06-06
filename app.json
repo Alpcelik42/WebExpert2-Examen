@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "KookKompas",
+    "slug": "kookkompas",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "kookkompas",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F7F2EA"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alperenozcelik.kookkompas",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "KookKompas gebruikt je locatie alleen om je regio te tonen en receptenvoorstellen persoonlijker te maken."
+      }
+    },
+    "android": {
+      "package": "com.alperenozcelik.kookkompas",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png",
+        "backgroundColor": "#F7F2EA"
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-splash-screen"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
