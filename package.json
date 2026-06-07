@@ -62,11 +62,11 @@
     "collectCoverageFrom": [
       "utils/**/*.{ts,tsx}",
       "services/**/*.{ts,tsx}",
-      "components/AppButton.tsx",
-      "components/EmptyState.tsx",
-      "components/ErrorMessage.tsx",
-      "components/InputField.tsx",
-      "components/LoadingState.tsx",
+      "components/AppKnop.tsx",
+      "components/FoutMelding.tsx",
+      "components/InvoerVeld.tsx",
+      "components/LaadStatus.tsx",
+      "components/LegeStaat.tsx",
       "!**/*.d.ts"
     ],
     "coverageThreshold": {
