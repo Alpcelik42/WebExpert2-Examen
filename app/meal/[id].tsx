@@ -53,7 +53,7 @@ export default function MealDetailScreen() {
 
         await Share.share({
             title: meal.strMeal,
-            message: `Bekijk dit recept in TasteTrail: ${meal.strMeal}`,
+            message: `Bekijk dit recept in KookKompas: ${meal.strMeal}`,
         });
     }
 

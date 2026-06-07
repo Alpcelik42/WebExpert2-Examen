@@ -1,5 +1,6 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { useCallback, useEffect, useState } from "react";
+import { Accelerometer } from "expo-sensors";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { AppButton } from "@/components/AppButton";
@@ -18,11 +19,17 @@ export default function RandomScreen() {
     const [meal, setMeal] = useState<Meal | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [sensorAvailable, setSensorAvailable] = useState(false);
+
+    const loadingRef = useRef(false);
+    const lastShakeRef = useRef(0);
 
     const loadRandom = useCallback(async () => {
         try {
+            loadingRef.current = true;
             setLoading(true);
             setError("");
+
             const randomMeal = await getRandomMeal();
             setMeal(randomMeal);
         } catch (apiError) {
@@ -30,12 +37,48 @@ export default function RandomScreen() {
                 apiError instanceof Error ? apiError.message : "Inspiratie laden mislukt."
             );
         } finally {
+            loadingRef.current = false;
             setLoading(false);
         }
     }, []);
 
     useEffect(() => {
         loadRandom();
+    }, [loadRandom]);
+
+    useEffect(() => {
+        let subscription: { remove: () => void } | null = null;
+
+        async function startShakeSensor() {
+            const available = await Accelerometer.isAvailableAsync();
+            setSensorAvailable(available);
+
+            if (!available) {
+                return;
+            }
+
+            Accelerometer.setUpdateInterval(350);
+
+            subscription = Accelerometer.addListener(({ x, y, z }) => {
+                if (loadingRef.current) {
+                    return;
+                }
+
+                const strength = Math.sqrt(x * x + y * y + z * z);
+                const now = Date.now();
+
+                if (strength > 1.8 && now - lastShakeRef.current > 1800) {
+                    lastShakeRef.current = now;
+                    loadRandom();
+                }
+            });
+        }
+
+        startShakeSensor();
+
+        return () => {
+            subscription?.remove();
+        };
     }, [loadRandom]);
 
     return (
@@ -50,12 +93,32 @@ export default function RandomScreen() {
                 </View>
 
                 <Text style={styles.title}>Geen idee wat te koken?</Text>
+
                 <Text style={styles.subtitle}>
                     Laat de app één recept kiezen uit de API. Handig wanneer je snel inspiratie wil.
                 </Text>
 
                 <AppButton title="Nieuw voorstel" onPress={loadRandom} loading={loading} />
             </Animated.View>
+
+            <View style={styles.sensorBox}>
+                <View style={styles.sensorIcon}>
+                    <MaterialCommunityIcons
+                        name="cellphone-arrow-down"
+                        size={25}
+                        color={colors.primary}
+                    />
+                </View>
+
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.sensorTitle}>Schud voor inspiratie</Text>
+                    <Text style={styles.sensorText}>
+                        {sensorAvailable
+                            ? "Schud je telefoon om automatisch een nieuw recept te laden."
+                            : "Deze functie werkt op een toestel met bewegingssensoren."}
+                    </Text>
+                </View>
+            </View>
 
             {error ? <ErrorMessage message={error} onRetry={loadRandom} /> : null}
             {loading ? <LoadingState message="Recept ophalen..." /> : null}
@@ -79,7 +142,7 @@ const styles = StyleSheet.create({
         borderColor: colors.border,
         padding: 18,
         gap: 12,
-        marginBottom: 18,
+        marginBottom: 14,
     },
     iconCircle: {
         width: 54,
@@ -99,5 +162,34 @@ const styles = StyleSheet.create({
         color: colors.muted,
         lineHeight: 22,
         fontWeight: "600",
+    },
+    sensorBox: {
+        backgroundColor: "#FFF7F0",
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.lg,
+        padding: 14,
+        flexDirection: "row",
+        gap: 12,
+        alignItems: "center",
+        marginBottom: 14,
+    },
+    sensorIcon: {
+        width: 44,
+        height: 44,
+        borderRadius: 16,
+        backgroundColor: "#F4E5DB",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    sensorTitle: {
+        color: colors.text,
+        fontWeight: "900",
+    },
+    sensorText: {
+        color: colors.muted,
+        fontWeight: "600",
+        lineHeight: 19,
+        marginTop: 3,
     },
 });
