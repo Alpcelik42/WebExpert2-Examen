@@ -4,12 +4,12 @@ import * as Location from "expo-location";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { EmptyState } from "@/components/EmptyState";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { LoadingState } from "@/components/LoadingState";
-import { MealCard } from "@/components/MealCard";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { LegeStaat } from "@/components/LegeStaat";
+import { FoutMelding } from "@/components/FoutMelding";
+import { LaadStatus } from "@/components/LaadStatus";
+import { ReceptKaart } from "@/components/ReceptKaart";
+import { Scherm } from "@/components/Scherm";
 import {
     getReadableLocationLabel,
     getRegionalSuggestion,
@@ -111,7 +111,7 @@ export default function HomeScreen() {
         "Aanbevolen";
 
     return (
-        <Screen style={{ paddingHorizontal: 0 }}>
+        <Scherm style={{ paddingHorizontal: 0 }}>
             <FlatList
                 data={meals}
                 keyExtractor={(item) => item.idMeal}
@@ -154,7 +154,7 @@ export default function HomeScreen() {
                                 </Text>
                             </View>
 
-                            <AppButton
+                            <AppKnop
                                 title={locationLabel ? "Update" : "Ophalen"}
                                 onPress={requestLocation}
                                 loading={locationLoading}
@@ -212,15 +212,15 @@ export default function HomeScreen() {
                         <Text style={styles.resultsTitle}>{selectedFilterLabel}</Text>
 
                         {error ? (
-                            <ErrorMessage message={error} onRetry={() => loadMeals(selectedFilter)} />
+                            <FoutMelding message={error} onRetry={() => loadMeals(selectedFilter)} />
                         ) : null}
 
-                        {loading ? <LoadingState message="Recepten laden..." /> : null}
+                        {loading ? <LaadStatus message="Recepten laden..." /> : null}
                     </Animated.View>
                 }
                 ListEmptyComponent={
                     !loading ? (
-                        <EmptyState
+                        <LegeStaat
                             title="Geen recepten gevonden"
                             message="Probeer een andere categorie of zoekterm."
                             iconName="magnify-close"
@@ -228,13 +228,13 @@ export default function HomeScreen() {
                     ) : null
                 }
                 renderItem={({ item }) => (
-                    <MealCard
+                    <ReceptKaart
                         meal={item}
                         favorite={isFavorite(item.idMeal)}
                         onFavoritePress={() => toggleFavorite(item)}
                     />
                 )}
             />
-        </Screen>
+        </Scherm>
     );
 }

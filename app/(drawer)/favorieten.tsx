@@ -1,9 +1,9 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { EmptyState } from "@/components/EmptyState";
-import { MealCard } from "@/components/MealCard";
-import { Screen } from "@/components/Screen";
+import { LegeStaat } from "@/components/LegeStaat";
+import { ReceptKaart } from "@/components/ReceptKaart";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useFavorites } from "@/context/FavoritesContext";
 
@@ -11,7 +11,7 @@ export default function FavoritesScreen() {
     const { favorites, toggleFavorite, isFavorite } = useFavorites();
 
     return (
-        <Screen style={{ paddingHorizontal: 0 }}>
+        <Scherm style={{ paddingHorizontal: 0 }}>
             <FlatList
                 data={favorites}
                 keyExtractor={(item) => item.idMeal}
@@ -36,21 +36,21 @@ export default function FavoritesScreen() {
                     </Animated.View>
                 }
                 ListEmptyComponent={
-                    <EmptyState
+                    <LegeStaat
                         title="Nog geen favorieten"
                         message="Tik op het hartje bij een recept om het hier te bewaren."
                         iconName="heart-plus-outline"
                     />
                 }
                 renderItem={({ item }) => (
-                    <MealCard
+                    <ReceptKaart
                         meal={item}
                         favorite={isFavorite(item.idMeal)}
                         onFavoritePress={() => toggleFavorite(item)}
                     />
                 )}
             />
-        </Screen>
+        </Scherm>
     );
 }
 

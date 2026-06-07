@@ -1,13 +1,13 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Accelerometer } from "expo-sensors";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { LoadingState } from "@/components/LoadingState";
-import { MealCard } from "@/components/MealCard";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { FoutMelding } from "@/components/FoutMelding";
+import { LaadStatus } from "@/components/LaadStatus";
+import { ReceptKaart } from "@/components/ReceptKaart";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useFavorites } from "@/context/FavoritesContext";
 import { getRandomMeal } from "@/services/api";
@@ -47,31 +47,40 @@ export default function RandomScreen() {
     }, [loadRandom]);
 
     useEffect(() => {
+        if (Platform.OS === "web") {
+            setSensorAvailable(false);
+            return;
+        }
+
         let subscription: { remove: () => void } | null = null;
 
         async function startShakeSensor() {
-            const available = await Accelerometer.isAvailableAsync();
-            setSensorAvailable(available);
+            try {
+                const available = await Accelerometer.isAvailableAsync();
+                setSensorAvailable(available);
 
-            if (!available) {
-                return;
-            }
-
-            Accelerometer.setUpdateInterval(350);
-
-            subscription = Accelerometer.addListener(({ x, y, z }) => {
-                if (loadingRef.current) {
+                if (!available) {
                     return;
                 }
 
-                const strength = Math.sqrt(x * x + y * y + z * z);
-                const now = Date.now();
+                Accelerometer.setUpdateInterval(350);
 
-                if (strength > 1.8 && now - lastShakeRef.current > 1800) {
-                    lastShakeRef.current = now;
-                    loadRandom();
-                }
-            });
+                subscription = Accelerometer.addListener(({ x, y, z }) => {
+                    if (loadingRef.current) {
+                        return;
+                    }
+
+                    const strength = Math.sqrt(x * x + y * y + z * z);
+                    const now = Date.now();
+
+                    if (strength > 1.8 && now - lastShakeRef.current > 1800) {
+                        lastShakeRef.current = now;
+                        loadRandom();
+                    }
+                });
+            } catch {
+                setSensorAvailable(false);
+            }
         }
 
         startShakeSensor();
@@ -82,7 +91,7 @@ export default function RandomScreen() {
     }, [loadRandom]);
 
     return (
-        <Screen scroll>
+        <Scherm scroll>
             <Animated.View entering={FadeInDown.duration(450)} style={styles.headerCard}>
                 <View style={styles.iconCircle}>
                     <MaterialCommunityIcons
@@ -98,7 +107,7 @@ export default function RandomScreen() {
                     Laat de app één recept kiezen uit de API. Handig wanneer je snel inspiratie wil.
                 </Text>
 
-                <AppButton title="Nieuw voorstel" onPress={loadRandom} loading={loading} />
+                <AppKnop title="Nieuw voorstel" onPress={loadRandom} loading={loading} />
             </Animated.View>
 
             <View style={styles.sensorBox}>
@@ -113,24 +122,26 @@ export default function RandomScreen() {
                 <View style={{ flex: 1 }}>
                     <Text style={styles.sensorTitle}>Schud voor inspiratie</Text>
                     <Text style={styles.sensorText}>
-                        {sensorAvailable
-                            ? "Schud je telefoon om automatisch een nieuw recept te laden."
-                            : "Deze functie werkt op een toestel met bewegingssensoren."}
+                        {Platform.OS === "web"
+                            ? "Deze schudfunctie werkt op een echt mobiel toestel met bewegingssensoren."
+                            : sensorAvailable
+                                ? "Schud je telefoon om automatisch een nieuw recept te laden."
+                                : "Deze functie werkt op een toestel met bewegingssensoren."}
                     </Text>
                 </View>
             </View>
 
-            {error ? <ErrorMessage message={error} onRetry={loadRandom} /> : null}
-            {loading ? <LoadingState message="Recept ophalen..." /> : null}
+            {error ? <FoutMelding message={error} onRetry={loadRandom} /> : null}
+            {loading ? <LaadStatus message="Recept ophalen..." /> : null}
 
             {meal && !loading ? (
-                <MealCard
+                <ReceptKaart
                     meal={meal}
                     favorite={isFavorite(meal.idMeal)}
                     onFavoritePress={() => toggleFavorite(meal)}
                 />
             ) : null}
-        </Screen>
+        </Scherm>
     );
 }
 

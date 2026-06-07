@@ -3,5 +3,5 @@ export const STORAGE_KEYS = {
     location: "tastetrail:last-location",
     searchPrefix: "tastetrail:search:",
     detailPrefix: "tastetrail:detail:",
-    randomMeal: "tastetrail:random-meal",
+    randomMeal: "tastetrail:random-recept",
 };

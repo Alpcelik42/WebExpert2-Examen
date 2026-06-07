@@ -18,7 +18,7 @@ type Props = {
     contentContainerStyle?: StyleProp<ViewStyle>;
 };
 
-export function Screen({ children, scroll = false, style, contentContainerStyle }: Props) {
+export function Scherm({ children, scroll = false, style, contentContainerStyle }: Props) {
     const content = scroll ? (
         <ScrollView
             keyboardShouldPersistTaps="handled"

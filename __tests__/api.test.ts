@@ -32,7 +32,7 @@ function mockFetchReject() {
     global.fetch = jest.fn().mockRejectedValue(new Error("Offline")) as unknown as typeof fetch;
 }
 
-describe("meal API service", () => {
+describe("recept API service", () => {
     beforeEach(async () => {
         await AsyncStorage.clear();
         jest.clearAllMocks();
@@ -108,7 +108,7 @@ describe("meal API service", () => {
         );
     });
 
-    test("getMealById fetches one meal detail", async () => {
+    test("getMealById fetches one recept detail", async () => {
         mockFetchResponse({
             meals: [rawMeal],
         });
@@ -154,7 +154,7 @@ describe("meal API service", () => {
         );
     });
 
-    test("getRandomMeal fetches a random meal", async () => {
+    test("getRandomMeal fetches a random recept", async () => {
         mockFetchResponse({
             meals: [rawMeal],
         });

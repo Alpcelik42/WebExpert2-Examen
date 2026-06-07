@@ -2,19 +2,19 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Redirect } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 import React from "react";
+import { LaadStatus } from "@/components/LaadStatus";
 import { colors } from "@/constants/theme";
-import { LoadingState } from "@/components/LoadingState";
 import { useAuth } from "@/context/AuthContext";
 
 export default function DrawerLayout() {
     const { user, loading } = useAuth();
 
     if (loading) {
-        return <LoadingState message="App voorbereiden..." />;
+        return <LaadStatus message="App voorbereiden..." />;
     }
 
     if (!user) {
-        return <Redirect href="/login" />;
+        return <Redirect href="/inloggen" />;
     }
 
     return (
@@ -64,7 +64,7 @@ export default function DrawerLayout() {
             />
 
             <Drawer.Screen
-                name="favorites"
+                name="favorieten"
                 options={{
                     title: "Favorieten",
                     drawerLabel: "Favorieten",
@@ -79,7 +79,7 @@ export default function DrawerLayout() {
             />
 
             <Drawer.Screen
-                name="about"
+                name="weekplanning"
                 options={{
                     title: "Weekplanning",
                     drawerLabel: "Weekplanning",

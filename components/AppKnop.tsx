@@ -18,7 +18,7 @@ type Props = {
     testID?: string;
 };
 
-export function AppButton({
+export function AppKnop({
                               title,
                               onPress,
                               loading = false,

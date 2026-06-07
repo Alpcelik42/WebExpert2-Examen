@@ -3,11 +3,11 @@ import { Link, Redirect, router } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { InputField } from "@/components/InputField";
-import { LoadingState } from "@/components/LoadingState";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { FoutMelding } from "@/components/FoutMelding";
+import { InvoerVeld } from "@/components/InvoerVeld";
+import { LaadStatus } from "@/components/LaadStatus";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { validateAuthForm } from "@/utils/validation";
@@ -28,7 +28,7 @@ export default function RegisterScreen() {
     const [submitting, setSubmitting] = useState(false);
 
     if (loading) {
-        return <LoadingState message="Account controleren..." />;
+        return <LaadStatus message="Account controleren..." />;
     }
 
     if (user) {
@@ -58,7 +58,7 @@ export default function RegisterScreen() {
     }
 
     return (
-        <Screen scroll>
+        <Scherm scroll>
             <Animated.View entering={FadeInUp.duration(450)} style={styles.hero}>
                 <View style={styles.logoMark}>
                     <MaterialCommunityIcons
@@ -80,9 +80,9 @@ export default function RegisterScreen() {
                     Vul je gegevens in. Je account wordt alleen op dit toestel bewaard.
                 </Text>
 
-                {generalError ? <ErrorMessage message={generalError} /> : null}
+                {generalError ? <FoutMelding message={generalError} /> : null}
 
-                <InputField
+                <InvoerVeld
                     label="Naam"
                     value={name}
                     onChangeText={setName}
@@ -90,7 +90,7 @@ export default function RegisterScreen() {
                     error={errors.name}
                 />
 
-                <InputField
+                <InvoerVeld
                     label="E-mail"
                     value={email}
                     onChangeText={setEmail}
@@ -100,7 +100,7 @@ export default function RegisterScreen() {
                     error={errors.email}
                 />
 
-                <InputField
+                <InvoerVeld
                     label="Wachtwoord"
                     value={password}
                     onChangeText={setPassword}
@@ -109,7 +109,7 @@ export default function RegisterScreen() {
                     error={errors.password}
                 />
 
-                <AppButton
+                <AppKnop
                     title="Account maken"
                     onPress={handleRegister}
                     loading={submitting}
@@ -117,12 +117,12 @@ export default function RegisterScreen() {
 
                 <View style={styles.linkRow}>
                     <Text style={styles.muted}>Heb je al een account?</Text>
-                    <Link href="/login" style={styles.link}>
+                    <Link href="/inloggen" style={styles.link}>
                         Inloggen
                     </Link>
                 </View>
             </Animated.View>
-        </Screen>
+        </Scherm>
     );
 }
 

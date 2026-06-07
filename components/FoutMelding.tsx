@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppButton } from "@/components/AppButton";
+import { AppKnop } from "@/components/AppKnop";
 import { colors, radius } from "@/constants/theme";
 
 type Props = {
@@ -8,14 +8,14 @@ type Props = {
     onRetry?: () => void;
 };
 
-export function ErrorMessage({ message, onRetry }: Props) {
+export function FoutMelding({ message, onRetry }: Props) {
     return (
         <View style={styles.wrapper}>
             <Text style={styles.title}>Er ging iets mis</Text>
             <Text style={styles.message}>{message}</Text>
 
             {onRetry ? (
-                <AppButton title="Opnieuw proberen" onPress={onRetry} variant="secondary" />
+                <AppKnop title="Opnieuw proberen" onPress={onRetry} variant="secondary" />
             ) : null}
         </View>
     );

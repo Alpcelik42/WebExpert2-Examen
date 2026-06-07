@@ -13,7 +13,7 @@ type Props = TextInputProps & {
     error?: string;
 };
 
-export function InputField({ label, error, style, ...props }: Props) {
+export function InvoerVeld({ label, error, style, ...props }: Props) {
     return (
         <View style={styles.wrapper}>
             <Text style={styles.label}>{label}</Text>

@@ -2,13 +2,13 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { EmptyState } from "@/components/EmptyState";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { InputField } from "@/components/InputField";
-import { LoadingState } from "@/components/LoadingState";
-import { MealCard } from "@/components/MealCard";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { LegeStaat } from "@/components/LegeStaat";
+import { FoutMelding } from "@/components/FoutMelding";
+import { InvoerVeld } from "@/components/InvoerVeld";
+import { LaadStatus } from "@/components/LaadStatus";
+import { ReceptKaart } from "@/components/ReceptKaart";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useFavorites } from "@/context/FavoritesContext";
 import { searchMeals } from "@/services/api";
@@ -47,7 +47,7 @@ export default function SearchScreen() {
     }
 
     return (
-        <Screen style={{ paddingHorizontal: 0 }}>
+        <Scherm style={{ paddingHorizontal: 0 }}>
             <FlatList
                 data={meals}
                 keyExtractor={(item) => item.idMeal}
@@ -72,7 +72,7 @@ export default function SearchScreen() {
                             </Text>
                         </View>
 
-                        <InputField
+                        <InvoerVeld
                             label="Zoekterm"
                             value={query}
                             onChangeText={setQuery}
@@ -82,22 +82,22 @@ export default function SearchScreen() {
                             error={inputError}
                         />
 
-                        <AppButton title="Zoeken" onPress={handleSearch} loading={loading} />
+                        <AppKnop title="Zoeken" onPress={handleSearch} loading={loading} />
 
-                        {apiError ? <ErrorMessage message={apiError} onRetry={handleSearch} /> : null}
-                        {loading ? <LoadingState message="Zoeken..." /> : null}
+                        {apiError ? <FoutMelding message={apiError} onRetry={handleSearch} /> : null}
+                        {loading ? <LaadStatus message="Zoeken..." /> : null}
                     </Animated.View>
                 }
                 ListEmptyComponent={
                     !loading ? (
                         searched ? (
-                            <EmptyState
+                            <LegeStaat
                                 title="Geen resultaten"
                                 message="Er zijn geen recepten gevonden voor deze zoekterm."
                                 iconName="database-search-outline"
                             />
                         ) : (
-                            <EmptyState
+                            <LegeStaat
                                 title="Start met zoeken"
                                 message="Gebruik de zoekbalk om recepten via de REST API op te halen."
                                 iconName="text-search"
@@ -106,14 +106,14 @@ export default function SearchScreen() {
                     ) : null
                 }
                 renderItem={({ item }) => (
-                    <MealCard
+                    <ReceptKaart
                         meal={item}
                         favorite={isFavorite(item.idMeal)}
                         onFavoritePress={() => toggleFavorite(item)}
                     />
                 )}
             />
-        </Screen>
+        </Scherm>
     );
 }
 

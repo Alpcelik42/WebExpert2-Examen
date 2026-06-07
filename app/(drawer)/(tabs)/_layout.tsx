@@ -34,23 +34,31 @@ export default function TabsLayout() {
                 options={{
                     title: "Home",
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="home-outline" size={size} color={color} />
+                        <MaterialCommunityIcons
+                            name="home-outline"
+                            size={size}
+                            color={color}
+                        />
                     ),
                 }}
             />
 
             <Tabs.Screen
-                name="search"
+                name="zoeken"
                 options={{
                     title: "Zoeken",
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="magnify" size={size} color={color} />
+                        <MaterialCommunityIcons
+                            name="magnify"
+                            size={size}
+                            color={color}
+                        />
                     ),
                 }}
             />
 
             <Tabs.Screen
-                name="random"
+                name="inspiratie"
                 options={{
                     title: "Inspiratie",
                     tabBarIcon: ({ color, size }) => (

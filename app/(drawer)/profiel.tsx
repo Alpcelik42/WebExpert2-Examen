@@ -4,8 +4,8 @@ import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { useFavorites } from "@/context/FavoritesContext";
@@ -22,11 +22,11 @@ export default function ProfileScreen() {
 
     async function handleLogout() {
         await logout();
-        router.replace("/login");
+        router.replace("/inloggen");
     }
 
     return (
-        <Screen scroll>
+        <Scherm scroll>
             <Animated.View entering={FadeInDown.duration(450)} style={styles.profileCard}>
                 <View style={styles.avatar}>
                     <MaterialCommunityIcons
@@ -99,10 +99,10 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.actions}>
-                <AppButton title="Favorieten wissen" onPress={clearFavorites} variant="secondary" />
-                <AppButton title="Uitloggen" onPress={handleLogout} variant="danger" />
+                <AppKnop title="Favorieten wissen" onPress={clearFavorites} variant="secondary" />
+                <AppKnop title="Uitloggen" onPress={handleLogout} variant="danger" />
             </View>
-        </Screen>
+        </Scherm>
     );
 }
 

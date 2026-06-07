@@ -6,6 +6,6 @@ describe("storage keys", () => {
         expect(STORAGE_KEYS.location).toBe("tastetrail:last-location");
         expect(STORAGE_KEYS.searchPrefix).toBe("tastetrail:search:");
         expect(STORAGE_KEYS.detailPrefix).toBe("tastetrail:detail:");
-        expect(STORAGE_KEYS.randomMeal).toBe("tastetrail:random-meal");
+        expect(STORAGE_KEYS.randomMeal).toBe("tastetrail:random-recept");
     });
 });

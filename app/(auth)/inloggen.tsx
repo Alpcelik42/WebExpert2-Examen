@@ -3,11 +3,11 @@ import { Link, Redirect, router } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { InputField } from "@/components/InputField";
-import { LoadingState } from "@/components/LoadingState";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { FoutMelding } from "@/components/FoutMelding";
+import { InvoerVeld } from "@/components/InvoerVeld";
+import { LaadStatus } from "@/components/LaadStatus";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
 import { validateAuthForm } from "@/utils/validation";
@@ -23,7 +23,7 @@ export default function LoginScreen() {
     const [submitting, setSubmitting] = useState(false);
 
     if (loading) {
-        return <LoadingState message="Account controleren..." />;
+        return <LaadStatus message="Account controleren..." />;
     }
 
     if (user) {
@@ -68,7 +68,7 @@ export default function LoginScreen() {
     }
 
     return (
-        <Screen scroll>
+        <Scherm scroll>
             <Animated.View entering={FadeInUp.duration(450)} style={styles.hero}>
                 <View style={styles.logoMark}>
                     <MaterialCommunityIcons
@@ -90,9 +90,9 @@ export default function LoginScreen() {
                     Gebruik je account om je favorieten en laatst bekeken recepten lokaal te bewaren.
                 </Text>
 
-                {generalError ? <ErrorMessage message={generalError} /> : null}
+                {generalError ? <FoutMelding message={generalError} /> : null}
 
-                <InputField
+                <InvoerVeld
                     label="E-mail"
                     value={email}
                     onChangeText={setEmail}
@@ -102,7 +102,7 @@ export default function LoginScreen() {
                     error={errors.email}
                 />
 
-                <InputField
+                <InvoerVeld
                     label="Wachtwoord"
                     value={password}
                     onChangeText={setPassword}
@@ -111,9 +111,9 @@ export default function LoginScreen() {
                     error={errors.password}
                 />
 
-                <AppButton title="Inloggen" onPress={handleLogin} loading={submitting} />
+                <AppKnop title="Inloggen" onPress={handleLogin} loading={submitting} />
 
-                <AppButton
+                <AppKnop
                     title="Demo-account gebruiken"
                     onPress={handleDemoAccount}
                     variant="secondary"
@@ -122,12 +122,12 @@ export default function LoginScreen() {
 
                 <View style={styles.linkRow}>
                     <Text style={styles.muted}>Nog geen account?</Text>
-                    <Link href="/register" style={styles.link}>
+                    <Link href="/registreren" style={styles.link}>
                         Account maken
                     </Link>
                 </View>
             </Animated.View>
-        </Screen>
+        </Scherm>
     );
 }
 

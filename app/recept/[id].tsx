@@ -8,10 +8,10 @@ import {
     View,
 } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { AppButton } from "@/components/AppButton";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { LoadingState } from "@/components/LoadingState";
-import { Screen } from "@/components/Screen";
+import { AppKnop } from "@/components/AppKnop";
+import { FoutMelding } from "@/components/FoutMelding";
+import { LaadStatus } from "@/components/LaadStatus";
+import { Scherm } from "@/components/Scherm";
 import { colors, radius } from "@/constants/theme";
 import { useFavorites } from "@/context/FavoritesContext";
 import { getMealById } from "@/services/api";
@@ -58,15 +58,15 @@ export default function MealDetailScreen() {
     }
 
     return (
-        <Screen scroll>
+        <Scherm scroll>
             <Stack.Screen
                 options={{
                     title: meal?.strMeal ?? "Recept details",
                 }}
             />
 
-            {loading ? <LoadingState message="Recept laden..." /> : null}
-            {error ? <ErrorMessage message={error} onRetry={loadMeal} /> : null}
+            {loading ? <LaadStatus message="Recept laden..." /> : null}
+            {error ? <FoutMelding message={error} onRetry={loadMeal} /> : null}
 
             {meal && !loading ? (
                 <Animated.View entering={FadeInDown.duration(500)} style={styles.wrapper}>
@@ -81,14 +81,14 @@ export default function MealDetailScreen() {
                         </Text>
 
                         <View style={styles.actions}>
-                            <AppButton
+                            <AppKnop
                                 title={isFavorite(meal.idMeal) ? "Verwijder favoriet" : "Bewaar favoriet"}
                                 onPress={() => toggleFavorite(meal)}
                                 variant={isFavorite(meal.idMeal) ? "secondary" : "primary"}
                                 style={styles.actionButton}
                             />
 
-                            <AppButton
+                            <AppKnop
                                 title="Delen"
                                 onPress={shareMeal}
                                 variant="secondary"
@@ -119,7 +119,7 @@ export default function MealDetailScreen() {
                     </View>
                 </Animated.View>
             ) : null}
-        </Screen>
+        </Scherm>
     );
 }
 

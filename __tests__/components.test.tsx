@@ -42,21 +42,21 @@ jest.mock("@expo/vector-icons/MaterialCommunityIcons", () => {
     };
 });
 
-import { AppButton } from "@/components/AppButton";
-import { EmptyState } from "@/components/EmptyState";
-import { ErrorMessage } from "@/components/ErrorMessage";
-import { InputField } from "@/components/InputField";
-import { LoadingState } from "@/components/LoadingState";
+import { AppKnop } from "@/components/AppKnop";
+import { LegeStaat } from "@/components/LegeStaat";
+import { FoutMelding } from "@/components/FoutMelding";
+import { InvoerVeld } from "@/components/InvoerVeld";
+import { LaadStatus } from "@/components/LaadStatus";
 
 function childrenOf(element: React.ReactElement) {
     return React.Children.toArray(element.props.children) as React.ReactElement[];
 }
 
 describe("basic UI components", () => {
-    test("AppButton exposes title and press handler", () => {
+    test("AppKnop exposes title and press handler", () => {
         const onPress = jest.fn();
 
-        const element = AppButton({
+        const element = AppKnop({
             title: "Klik mij",
             onPress,
         }) as React.ReactElement;
@@ -70,8 +70,8 @@ describe("basic UI components", () => {
         expect(child.props.children).toBe("Klik mij");
     });
 
-    test("AppButton supports disabled state", () => {
-        const element = AppButton({
+    test("AppKnop supports disabled state", () => {
+        const element = AppKnop({
             title: "Disabled",
             onPress: jest.fn(),
             disabled: true,
@@ -80,8 +80,8 @@ describe("basic UI components", () => {
         expect(element.props.disabled).toBe(true);
     });
 
-    test("AppButton supports loading state", () => {
-        const element = AppButton({
+    test("AppKnop supports loading state", () => {
+        const element = AppKnop({
             title: "Laden",
             onPress: jest.fn(),
             loading: true,
@@ -91,8 +91,8 @@ describe("basic UI components", () => {
         expect(element.props.children).toBeTruthy();
     });
 
-    test("AppButton supports secondary variant", () => {
-        const element = AppButton({
+    test("AppKnop supports secondary variant", () => {
+        const element = AppKnop({
             title: "Secundair",
             onPress: jest.fn(),
             variant: "secondary",
@@ -102,8 +102,8 @@ describe("basic UI components", () => {
         expect(child.props.children).toBe("Secundair");
     });
 
-    test("EmptyState renders title, message and default icon", () => {
-        const element = EmptyState({
+    test("LegeStaat renders title, message and default icon", () => {
+        const element = LegeStaat({
             title: "Geen data",
             message: "Er is niets gevonden.",
         }) as React.ReactElement;
@@ -117,8 +117,8 @@ describe("basic UI components", () => {
         expect(children[2].props.children).toBe("Er is niets gevonden.");
     });
 
-    test("EmptyState supports custom icon", () => {
-        const element = EmptyState({
+    test("LegeStaat supports custom icon", () => {
+        const element = LegeStaat({
             title: "Geen favorieten",
             message: "Bewaar eerst een recept.",
             iconName: "heart-plus-outline",
@@ -131,8 +131,8 @@ describe("basic UI components", () => {
         expect(icon.props.name).toBe("heart-plus-outline");
     });
 
-    test("ErrorMessage renders message without retry button", () => {
-        const element = ErrorMessage({
+    test("FoutMelding renders message without retry button", () => {
+        const element = FoutMelding({
             message: "Netwerkfout",
         }) as React.ReactElement;
 
@@ -143,10 +143,10 @@ describe("basic UI components", () => {
         expect(children[2]).toBeUndefined();
     });
 
-    test("ErrorMessage renders retry button when onRetry exists", () => {
+    test("FoutMelding renders retry button when onRetry exists", () => {
         const onRetry = jest.fn();
 
-        const element = ErrorMessage({
+        const element = FoutMelding({
             message: "API fout",
             onRetry,
         }) as React.ReactElement;
@@ -158,8 +158,8 @@ describe("basic UI components", () => {
         expect(retryButton.props.onPress).toBe(onRetry);
     });
 
-    test("InputField renders label, input and error", () => {
-        const element = InputField({
+    test("InvoerVeld renders label, input and error", () => {
+        const element = InvoerVeld({
             label: "E-mail",
             value: "",
             onChangeText: jest.fn(),
@@ -173,8 +173,8 @@ describe("basic UI components", () => {
         expect(children[2].props.children).toBe("E-mail is verplicht.");
     });
 
-    test("InputField renders without error", () => {
-        const element = InputField({
+    test("InvoerVeld renders without error", () => {
+        const element = InvoerVeld({
             label: "Naam",
             value: "Alperen",
             onChangeText: jest.fn(),
@@ -187,16 +187,16 @@ describe("basic UI components", () => {
         expect(children[2]).toBeUndefined();
     });
 
-    test("LoadingState renders default message", () => {
-        const element = LoadingState({}) as React.ReactElement;
+    test("LaadStatus renders default message", () => {
+        const element = LaadStatus({}) as React.ReactElement;
 
         const children = childrenOf(element);
 
         expect(children[1].props.children).toBe("Laden...");
     });
 
-    test("LoadingState renders custom message", () => {
-        const element = LoadingState({
+    test("LaadStatus renders custom message", () => {
+        const element = LaadStatus({
             message: "Recepten laden...",
         }) as React.ReactElement;
 

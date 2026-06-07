@@ -25,7 +25,7 @@ type Props = {
     onFavoritePress?: () => void;
 };
 
-export function MealCard({ meal, favorite = false, onFavoritePress }: Props) {
+export function ReceptKaart({ meal, favorite = false, onFavoritePress }: Props) {
     const scale = useSharedValue(1);
 
     const animatedStyle = useAnimatedStyle(() => ({
@@ -34,7 +34,7 @@ export function MealCard({ meal, favorite = false, onFavoritePress }: Props) {
 
     function openDetail() {
         router.push({
-            pathname: "/meal/[id]",
+            pathname: "/recept/[id]",
             params: { id: meal.idMeal },
         });
     }

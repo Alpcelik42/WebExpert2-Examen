@@ -11,7 +11,7 @@ type Props = {
     iconName?: IconName;
 };
 
-export function EmptyState({
+export function LegeStaat({
                                title,
                                message,
                                iconName = "silverware-fork-knife",
